@@ -1,0 +1,36 @@
+cat << 'EOF' > app/templates/index.html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>DG1 – <Họ tên> – <MSSV></title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>DG1 – <Họ tên> – <MSSV></h1>
+    <h2>Danh sách sinh viên</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>MSSV</th>
+                <th>Họ và tên</th>
+                <th>Lớp</th>
+                <th>Điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.mssv }}</td>
+                <td>{{ s.ho_ten }}</td>
+                <td>{{ s.lop }}</td>
+                <td>{{ s.diem }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+EOF
