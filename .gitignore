@@ -1,0 +1,7 @@
+cat << 'EOF' > .gitignore
+logs/
+*.tar.gz
+__pycache__/
+node_modules/
+.env
+EOF

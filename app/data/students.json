@@ -1,0 +1,9 @@
+cat << 'EOF' > app/data/students.json
+[
+  {"id": 1, "mssv": "SV001", "ho_ten": "Truong Thanh Trung", "lop": "CT2801", "diem": 8.5},
+  {"id": 2, "mssv": "SV002", "ho_ten": "Vu Tan Tai", "lop": "CT2801", "diem": 7.0},
+  {"id": 3, "mssv": "SV003", "ho_ten": "Pham Gia Huy", "lop": "CT2801", "diem": 9.0},
+  {"id": 4, "mssv": "SV004", "ho_ten": "Tran Hoang Quyen", "lop": "CT2801", "diem": 6.5},
+  {"id": 5, "mssv": "SV005", "ho_ten": "Pham Truong Giang", "lop": "CT2801", "diem": 10.0}
+]
+EOF
