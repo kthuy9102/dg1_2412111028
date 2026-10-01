@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>DANH SÁCH SINH VIÊN</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>DANH SÁCH SINH VIÊN</h1>
+    
+    <!-- Form Thêm / Cập nhật Sinh Viên -->
+    <div class="form-container">
+        <h3 id="form-title">Thêm sinh viên mới</h3>
+        <form id="student-form">
+            <input type="hidden" id="student-id">
+            <input type="text" id="mssv" placeholder="MSSV" required>
+            <input type="text" id="ho_ten" placeholder="Họ và tên" required>
+            <input type="text" id="lop" placeholder="Lớp" required>
+            <input type="number" id="diem" step="0.1" min="0" max="10" placeholder="Điểm (0-10)" required>
+            <button type="submit" id="btn-submit">Thêm sinh viên</button>
+            <button type="button" id="btn-cancel" style="display:none;" onclick="resetForm()">Hủy sửa</button>
+        </form>
+    </div>
+
+    <h2>Danh sách sinh viên</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>MSSV</th>
+                <th>Họ và tên</th>
+                <th>Lớp</th>
+                <th>Điểm</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="student-table-body">
+            {% for s in students %}
+            <tr id="row-{{ s.id }}">
+                <td>{{ s.id }}</td>
+                <td>{{ s.mssv }}</td>
+                <td>{{ s.ho_ten }}</td>
+                <td>{{ s.lop }}</td>
+                <td>{{ s.diem }}</td>
+                <td>
+                    <button class="btn-edit" onclick="editStudent({{ s.id }}, '{{ s.mssv }}', '{{ s.ho_ten }}', '{{ s.lop }}', {{ s.diem }})">Sửa</button>
+                    <button class="btn-delete" onclick="deleteStudent({{ s.id }})">Xóa</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('student-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const id = document.getElementById('student-id').value;
+            const mssv = document.getElementById('mssv').value;
+            const ho_ten = document.getElementById('ho_ten').value;
+            const lop = document.getElementById('lop').value;
+            const diem = parseFloat(document.getElementById('diem').value);
+
+            const data = { mssv, ho_ten, lop, diem };
+
+            if (id) {
+                // Sửa sinh viên (PUT)
+                const res = await fetch(`/api/students/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    alert('Lỗi cập nhật sinh viên');
+                }
+            } else {
+                // Thêm sinh viên mới (POST)
+                const res = await fetch('/api/students', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Lỗi thêm sinh viên');
+                }
+            }
+        });
+
+        function editStudent(id, mssv, ho_ten, lop, diem) {
+            document.getElementById('form-title').innerText = 'Sửa thông tin sinh viên ID: ' + id;
+            document.getElementById('student-id').value = id;
+            document.getElementById('mssv').value = mssv;
+            document.getElementById('ho_ten').value = ho_ten;
+            document.getElementById('lop').value = lop;
+            document.getElementById('diem').value = diem;
+            document.getElementById('btn-submit').innerText = 'Cập nhật';
+            document.getElementById('btn-cancel').style.display = 'inline-block';
+        }
+
+        function resetForm() {
+            document.getElementById('form-title').innerText = 'Thêm sinh viên mới';
+            document.getElementById('student-id').value = '';
+            document.getElementById('student-form').reset();
+            document.getElementById('btn-submit').innerText = 'Thêm sinh viên';
+            document.getElementById('btn-cancel').style.display = 'none';
+        }
+
+        async function deleteStudent(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sinh viên ID này không?')) {
+                const res = await fetch(`/api/students/${id}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    alert('Lỗi khi xóa sinh viên');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
