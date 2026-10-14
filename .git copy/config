@@ -1,0 +1,23 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@github.com:kthuy9102/dg1_2412111028
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "develop"]
+	remote = origin
+	merge = refs/heads/develop
+[branch "feature/web-app"]
+	remote = origin
+	merge = refs/heads/feature/web-app
+[branch "feature/docker"]
+	remote = origin
+	merge = refs/heads/feature/docker
+[branch "feature/docker-new"]
+	remote = origin
+	merge = refs/heads/feature/docker-new
