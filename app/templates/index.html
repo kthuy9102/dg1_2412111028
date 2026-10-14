@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>DANH SÁCH SINH VIÊN</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>DANH SÁCH SINH VIÊN</h1>
+    <h2>Khoa CNTT</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>MSSV</th>
+                <th>Họ và tên</th>
+                <th>Lớp</th>
+                <th>Điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.mssv }}</td>
+                <td>{{ s.ho_ten }}</td>
+                <td>{{ s.lop }}</td>
+                <td>{{ s.diem }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

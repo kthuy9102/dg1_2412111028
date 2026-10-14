@@ -1,0 +1,67 @@
+zael@zael0911:~$ echo "=== GET /api/health ==="
+  curl -i http://localhost:5000/api/health
+=== GET /api/health ===
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.14.4
+Date: Wed, 07 Oct 2026 01:45:18 GMT
+Content-Type: application/json
+Content-Length: 39
+Connection: close
+
+{"status":"ok","student":"2412111028"}
+zael@zael0911:~$ echo -e "\n\n=== GET /api/students ==="
+  curl -i http://localhost:5000/api/students
+
+
+=== GET /api/students ===
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.14.4
+Date: Wed, 07 Oct 2026 01:45:26 GMT
+Content-Type: application/json
+Content-Length: 359
+Connection: close
+
+[{"diem":8.5,"ho_ten":"Nguyen Van A","id":1,"lop":"CNTT1","mssv":"SV001"},{"diem":7.0,"ho_ten":"Tran Thi B","id":2,"lop":"CNTT1","mssv":"SV002"},{"diem":9.0,"ho_ten":"Le Van C","id":3,"lop":"CNTT2","mssv":"SV003"},{"diem":6.5,"ho_ten":"Pham Thi D","id":4,"lop":"CNTT2","mssv":"SV004"},{"diem":10.0,"ho_ten":"Hoang Van E","id":5,"lop":"CNTT1","mssv":"SV005"}]
+zael@zael0911:~$ echo -e "\n\n=== GET /api/students?lop=CNTT1 ==="
+  curl -i "http://localhost:5000/api/students?lop=CNTT1"
+
+
+=== GET /api/students?lop=CNTT1 ===
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.14.4
+Date: Wed, 07 Oct 2026 01:45:32 GMT
+Content-Type: application/json
+Content-Length: 219
+Connection: close
+
+[{"diem":8.5,"ho_ten":"Nguyen Van A","id":1,"lop":"CNTT1","mssv":"SV001"},{"diem":7.0,"ho_ten":"Tran Thi B","id":2,"lop":"CNTT1","mssv":"SV002"},{"diem":10.0,"ho_ten":"Hoang Van E","id":5,"lop":"CNTT1","mssv":"SV005"}]
+zael@zael0911:~$ echo -e "\n\n=== POST /api/students (INVALID DIEM > 10) ==="
+  curl -i -X POST http://localhost:5000/api/students \
+    -H "Content-Type: application/json" \
+    -d '{"mssv":"SV006","ho_ten":"Test","lop":"CNTT1","diem":11}'
+
+
+=== POST /api/students (INVALID DIEM > 10) ===
+HTTP/1.1 400 BAD REQUEST
+Server: Werkzeug/3.1.9 Python/3.14.4
+Date: Wed, 07 Oct 2026 01:45:39 GMT
+Content-Type: application/json
+Content-Length: 42
+Connection: close
+
+{"error":"Diem must be between 0 and 10"}
+zael@zael0911:~$ echo -e "\n\n=== POST /api/students (VALID) ==="
+  curl -i -X POST http://localhost:5000/api/students \
+    -H "Content-Type: application/json" \
+    -d '{"mssv":"SV007","ho_ten":"Nguyen Van G","lop":"CNTT1","diem":8.0}'
+
+
+=== POST /api/students (VALID) ===
+HTTP/1.1 201 CREATED
+Server: Werkzeug/3.1.9 Python/3.14.4
+Date: Wed, 07 Oct 2026 01:45:49 GMT
+Content-Type: application/json
+Content-Length: 73
+Connection: close
+
+{"diem":8.0,"ho_ten":"Nguyen Van F","id":6,"lop":"CNTT1","mssv":"SV006"}

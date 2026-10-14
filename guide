@@ -1,0 +1,6 @@
+C:
+curl -i http://localhost:5000/api/health
+curl -i http://localhost:5000/api/students
+curl -i "http://localhost:5000/api/students?lop=CNTT1"
+curl -i -X POST http://localhost:5000/api/students \ -H "Content-Type: application/json" \ -d '{"mssv":"SV006","ho_ten":"Test","lop":"CNTT1","diem":11}'
+curl -i -X POST http://localhost:5000/api/students \ -H "Content-Type: application/json" \ -d '{"mssv":"SV006","ho_ten":"Nguyen Van F","lop":"CNTT1","diem":8.0}'
